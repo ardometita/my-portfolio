@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>✨ My Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --cream:#fdf6ec; --peach:#f9c9a5; --rose:#f2a7a7; --blush:#f7d6d6;
+  --sage:#a8c5a0; --mint:#c5e8d5; --lavender:#d4c5f0; --sky:#c5dff0;
+  --butter:#f5e6a3; --brown:#7a4f3a; --dark-green:#3a6b35;
+  --text-dark:#3d2c1e; --text-mid:#6b4f3a; --text-light:#a07855;
+  --card-bg:#fffaf5; --shadow:0 8px 30px rgba(122,79,58,.10);
+  --shadow-hover:0 16px 44px rgba(122,79,58,.18);
+  --radius:24px; --radius-sm:14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+h1,h2,h3{font-family:'Baloo 2',cursive}
+section{padding:80px 20px}
+.container{max-width:1100px;margin:0 auto}
+.section-title{font-size:clamp(1.8rem,4vw,2.6rem);color:var(--brown);text-align:center;margin-bottom:12px}
+.section-subtitle{text-align:center;color:var(--text-light);margin-bottom:50px;font-size:1rem}
+
+/* ── PAGE ROUTER ── */
+.page{position:fixed;inset:0;overflow-y:auto;background:var(--cream);transition:transform .45s cubic-bezier(.77,0,.18,1),opacity .45s ease;will-change:transform,opacity}
+.page.page-right{transform:translateX(100%);opacity:0;pointer-events:none}
+.page.page-left{transform:translateX(-8%);opacity:0;pointer-events:none}
+.page.page-active{transform:translateX(0);opacity:1;pointer-events:auto}
+
+/* ── FADE ── */
+.fade-in{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ── NAVBAR ── */
+nav{position:sticky;top:0;z-index:500;background:rgba(253,246,236,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(249,201,165,.4);padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Baloo 2',cursive;font-size:1.45rem;font-weight:800;color:var(--brown);display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-logo span{color:var(--rose)}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--text-mid);font-weight:600;font-size:.92rem;transition:color .2s;position:relative;cursor:pointer}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:2px;background:var(--rose);border-radius:2px;transform:scaleX(0);transition:transform .25s}
+.nav-links a:hover{color:var(--rose)}
+.nav-links a:hover::after{transform:scaleX(1)}
+
+/* ── HERO ── */
+#hero{min-height:calc(100vh - 60px);display:flex;align-items:center;padding:20px;position:relative;overflow:hidden;background:linear-gradient(135deg,#fdf6ec 60%,#fde8d8 100%)}
+#hero::before{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(244,167,167,.17) 0%,transparent 70%);top:-100px;right:-100px;border-radius:50%;pointer-events:none}
+#hero::after{content:'';position:absolute;width:350px;height:350px;background:radial-gradient(circle,rgba(168,197,160,.14) 0%,transparent 70%);bottom:-80px;left:-80px;border-radius:50%;pointer-events:none}
+.hero-inner{display:flex;align-items:center;justify-content:space-between;gap:40px;max-width:1100px;margin:0 auto;width:100%}
+.hero-text{flex:1}
+.hero-badge{display:inline-block;background:var(--blush);color:var(--rose);border-radius:50px;padding:6px 18px;font-size:.85rem;font-weight:700;margin-bottom:18px;animation:pop .5s ease .2s both}
+.hero-name{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;color:var(--text-dark);line-height:1.1;animation:slideUp .7s ease .3s both}
+.hero-name .highlight{color:var(--rose)}
+.hero-tagline{font-size:clamp(.95rem,2.5vw,1.2rem);color:var(--text-mid);margin:18px 0 32px;animation:slideUp .7s ease .5s both;min-height:2em}
+.cursor-blink{display:inline-block;width:3px;background:var(--rose);margin-left:2px;animation:blink .9s step-end infinite}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:slideUp .7s ease .7s both}
+.btn-primary{background:linear-gradient(135deg,#f2a7a7,#e88080);color:white;border:none;padding:14px 32px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(242,167,167,.45);transition:transform .2s,box-shadow .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(242,167,167,.6)}
+.btn-primary:active{transform:scale(.96)}
+.btn-outline{background:transparent;color:var(--brown);border:2px solid var(--peach);padding:13px 30px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:background .2s,transform .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-outline:hover{background:var(--blush);transform:translateY(-3px)}
+.hero-mascot{flex:0 0 auto;animation:float 4s ease-in-out infinite}
+.mascot-wrap{width:300px;height:320px}
+.character-svg{width:100%;height:100%;filter:drop-shadow(0 20px 40px rgba(122,79,58,.15))}
+
+/* ── ABOUT ── */
+#about{background:white}
+.about-card{background:var(--card-bg);border-radius:var(--radius);padding:48px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;border:1.5px solid rgba(249,201,165,.25)}
+.about-emoji{font-size:3.5rem;margin-bottom:16px}
+.about-text h3{font-size:1.5rem;color:var(--brown);margin-bottom:14px}
+.about-text p{color:var(--text-mid);line-height:1.85;font-size:.97rem}
+.about-fun-facts{list-style:none}
+.about-fun-facts li{padding:12px 0;border-bottom:1.5px dashed var(--blush);color:var(--text-mid);display:flex;align-items:center;gap:12px;font-weight:600}
+.about-fun-facts li:last-child{border-bottom:none}
+
+/* ── HOME PREVIEW ── */
+#home-projects-preview{background:var(--cream)}
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-bottom:36px}
+.preview-card{background:var(--card-bg);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);border:1.5px solid transparent;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;position:relative;overflow:hidden}
+.preview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--radius) var(--radius) 0 0}
+.color-rose .preview-card::before,.preview-card.color-rose::before{background:linear-gradient(90deg,var(--rose),var(--peach))}
+.color-sage .preview-card::before,.preview-card.color-sage::before{background:linear-gradient(90deg,var(--sage),var(--mint))}
+.color-lavender .preview-card::before,.preview-card.color-lavender::before{background:linear-gradient(90deg,var(--lavender),var(--sky))}
+.preview-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-hover);border-color:rgba(249,201,165,.4)}
+.card-emoji{font-size:2rem;margin-bottom:12px}
+.card-title{font-size:1.08rem;font-weight:700;color:var(--brown);margin-bottom:6px}
+.card-desc{font-size:.86rem;color:var(--text-light);line-height:1.6;margin-bottom:14px}
+.card-status{display:inline-block;padding:4px 14px;border-radius:50px;font-size:.76rem;font-weight:700}
+.status-Done{background:var(--mint);color:var(--dark-green)}
+.status-Improving{background:var(--butter);color:#a07010}
+.status-Beginner{background:var(--blush);color:var(--rose)}
+.status-Ongoing{background:var(--sky);color:#2a6080}
+.status-Paused{background:#ede;color:#806}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.card-tag{background:var(--cream);border-radius:50px;padding:3px 12px;font-size:.74rem;font-weight:700;color:var(--text-mid);border:1px solid var(--blush)}
+.see-all-wrap{text-align:center}
+.see-all-btn{background:linear-gradient(135deg,#f2a7a7,#e88080);color:white;border:none;padding:16px 44px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:800;cursor:pointer;box-shadow:0 6px 22px rgba(242,167,167,.45);transition:transform .25s,box-shadow .25s;display:inline-flex;align-items:center;gap:10px}
+.see-all-btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 14px 34px rgba(242,167,167,.55)}
+
+/* ── TECH ── */
+#tech{background:white}
+.tech-grid{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+.tech-pill{display:flex;align-items:center;gap:10px;background:var(--card-bg);border-radius:50px;padding:12px 24px;box-shadow:var(--shadow);font-weight:700;font-size:.93rem;color:var(--text-dark);border:1.5px solid transparent;cursor:default;transition:transform .2s,box-shadow .2s}
+.tech-pill:hover{transform:scale(1.08) translateY(-3px);box-shadow:var(--shadow-hover)}
+.tech-icon{font-size:1.4rem}
+
+/* ── SKILLS ── */
+#skills{background:var(--cream)}
+.skills-note{text-align:center;background:var(--card-bg);border:1.5px dashed var(--peach);border-radius:var(--radius-sm);padding:14px 20px;margin-bottom:36px;color:var(--text-mid);font-size:.88rem}
+.skills-note i{color:var(--rose);margin-right:6px}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.skill-item{background:var(--card-bg);border-radius:var(--radius-sm);padding:22px 26px;box-shadow:var(--shadow)}
+.skill-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.skill-name{font-weight:700;color:var(--text-dark);font-size:.97rem;display:flex;align-items:center;gap:8px}
+.skill-meta{font-size:.78rem;color:var(--text-light);font-weight:600}
+.skill-bar-bg{background:var(--blush);border-radius:50px;height:10px;overflow:hidden;margin-bottom:6px}
+.skill-bar{height:100%;border-radius:50px;width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.skill-count{font-size:.76rem;color:var(--text-light);text-align:right}
+
+/* ── SOCIAL ── */
+#social{background:white}
+.social-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.social-btn{display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;padding:22px 24px;border-radius:var(--radius);background:var(--card-bg);box-shadow:var(--shadow);border:1.5px solid transparent;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,border-color .25s;color:var(--text-dark)}
+.social-btn:hover{transform:translateY(-8px) scale(1.07);box-shadow:var(--shadow-hover)}
+.social-btn .s-icon{font-size:1.9rem}
+.social-btn .s-label{font-size:.8rem;font-weight:700;color:var(--text-mid)}
+.social-btn.instagram:hover{border-color:#e1306c}
+.social-btn.facebook:hover{border-color:#1877f2}
+.social-btn.github:hover{border-color:#333}
+.social-btn.linkedin:hover{border-color:#0a66c2}
+
+/* ── CONTACT ── */
+#contact{background:var(--cream)}
+.contact-wrap{max-width:560px;margin:0 auto;background:var(--card-bg);border-radius:var(--radius);padding:44px;box-shadow:var(--shadow);border:1.5px solid rgba(249,201,165,.25)}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-weight:700;font-size:.86rem;color:var(--text-mid);margin-bottom:8px;text-transform:uppercase;letter-spacing:.8px}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--cream);border:1.5px solid var(--blush);border-radius:var(--radius-sm);padding:13px 16px;font-family:'Nunito',sans-serif;font-size:.97rem;color:var(--text-dark);outline:none;transition:border-color .2s,box-shadow .2s;resize:none}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(242,167,167,.15)}
+.submit-btn{width:100%;background:linear-gradient(135deg,#f2a7a7,#e88080);color:white;border:none;padding:15px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1.03rem;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(242,167,167,.45);transition:transform .2s,box-shadow .2s}
+.submit-btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(242,167,167,.55)}
+footer{background:white;text-align:center;padding:28px 20px;color:var(--text-light);font-size:.88rem;border-top:1.5px solid var(--blush)}
+footer span{color:var(--rose)}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark-green);color:white;padding:13px 26px;border-radius:50px;font-weight:700;font-size:.93rem;z-index:9999;transition:transform .4s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── PROJECTS PAGE ── */
+#page-projects{background:var(--cream)}
+.proj-page-nav{position:sticky;top:0;z-index:500;background:rgba(253,246,236,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(249,201,165,.4);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.proj-page-nav-left{display:flex;align-items:center;gap:14px}
+.back-btn{display:flex;align-items:center;gap:8px;background:var(--blush);color:var(--brown);border:none;padding:10px 22px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s,transform .2s}
+.back-btn:hover{background:var(--rose);color:white;transform:translateX(-3px)}
+.proj-page-title{font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:var(--brown)}
+.add-proj-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#a8c5a0,#7aaa72);color:white;border:none;padding:11px 24px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(122,197,122,.35);transition:transform .2s,box-shadow .2s}
+.add-proj-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 8px 24px rgba(122,197,122,.45)}
+
+.projects-page-body{padding:40px 20px 80px;max-width:1100px;margin:0 auto}
+.projects-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;justify-content:center}
+.filter-btn{padding:8px 22px;border-radius:50px;border:2px solid var(--blush);background:var(--card-bg);color:var(--text-mid);font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:var(--rose);color:white;border-color:var(--rose)}
+.projects-full-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:26px}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-light)}
+.empty-state .empty-icon{font-size:3rem;margin-bottom:14px}
+
+.full-card{background:var(--card-bg);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1.5px solid transparent;transition:transform .25s,box-shadow .25s,border-color .25s;display:flex;flex-direction:column}
+.full-card::before{content:'';display:block;height:5px}
+.full-card.color-rose::before{background:linear-gradient(90deg,var(--rose),var(--peach))}
+.full-card.color-sage::before{background:linear-gradient(90deg,var(--sage),var(--mint))}
+.full-card.color-lavender::before{background:linear-gradient(90deg,var(--lavender),var(--sky))}
+.full-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-hover);border-color:rgba(249,201,165,.4)}
+.full-card-body{padding:26px;flex:1;display:flex;flex-direction:column}
+.full-card-emoji{font-size:2.2rem;margin-bottom:12px}
+.full-card-title{font-size:1.1rem;font-weight:800;color:var(--brown);margin-bottom:6px}
+.full-card-desc{font-size:.86rem;color:var(--text-mid);line-height:1.7;margin-bottom:14px;flex:1}
+.full-card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.full-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1.5px dashed var(--blush);flex-wrap:wrap;gap:8px}
+.card-actions{display:flex;gap:8px}
+.view-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#f2a7a7,#e88080);color:white;border:none;padding:9px 18px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(242,167,167,.4);transition:transform .2s,box-shadow .2s}
+.view-btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(242,167,167,.55)}
+.edit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--lavender);color:#5a4080;border:none;padding:9px 16px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:800;cursor:pointer;transition:transform .2s,background .2s}
+.edit-btn:hover{background:#c4b0f0;transform:translateY(-2px)}
+.delete-btn{display:inline-flex;align-items:center;background:var(--blush);color:var(--rose);border:none;padding:9px 12px;border-radius:50px;font-size:.83rem;cursor:pointer;transition:background .2s}
+.delete-btn:hover{background:var(--rose);color:white}
+
+/* ── DETAIL PAGE ── */
+#page-project-detail{background:var(--cream)}
+.detail-nav{position:sticky;top:0;z-index:500;background:rgba(253,246,236,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(249,201,165,.4);padding:14px 32px;display:flex;align-items:center;gap:18px}
+.detail-body{max-width:780px;margin:0 auto;padding:50px 20px 80px}
+.detail-hero{background:var(--card-bg);border-radius:var(--radius);padding:40px;box-shadow:var(--shadow);margin-bottom:22px;border:1.5px solid rgba(249,201,165,.25);position:relative;overflow:hidden}
+.detail-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:6px}
+.detail-hero.color-rose::before{background:linear-gradient(90deg,var(--rose),var(--peach))}
+.detail-hero.color-sage::before{background:linear-gradient(90deg,var(--sage),var(--mint))}
+.detail-hero.color-lavender::before{background:linear-gradient(90deg,var(--lavender),var(--sky))}
+.detail-emoji{font-size:3.5rem;margin-bottom:12px}
+.detail-title{font-size:2rem;color:var(--brown);margin-bottom:10px}
+.detail-status-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.detail-desc{color:var(--text-mid);line-height:1.9;font-size:1rem}
+.detail-section{background:var(--card-bg);border-radius:var(--radius-sm);padding:26px 30px;box-shadow:var(--shadow);margin-bottom:16px;border:1.5px solid rgba(249,201,165,.18)}
+.detail-section-label{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-light);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.detail-section-val{color:var(--text-dark);line-height:1.8;font-size:.97rem}
+.github-link-btn{display:inline-flex;align-items:center;gap:10px;background:#1a1a2e;color:white;border:none;padding:13px 26px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.2);transition:transform .2s,box-shadow .2s;margin-top:6px;margin-right:10px}
+.github-link-btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.28);background:#2d2d44}
+.live-link-btn{display:inline-flex;align-items:center;gap:10px;background:#3a6b35;color:white;border:none;padding:13px 26px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 6px 20px rgba(58,107,53,.3);transition:transform .2s,box-shadow .2s;margin-top:6px}
+.live-link-btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(58,107,53,.4)}
+.no-link-note{display:inline-flex;align-items:center;gap:8px;background:var(--blush);color:var(--text-mid);padding:11px 20px;border-radius:50px;font-size:.87rem;font-weight:700;margin-top:6px}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(61,44,30,.48);backdrop-filter:blur(6px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal-box{background:var(--card-bg);border-radius:var(--radius);padding:36px;max-width:600px;width:100%;box-shadow:0 30px 80px rgba(61,44,30,.25);transform:scale(.9) translateY(20px);transition:transform .35s cubic-bezier(.34,1.56,.64,1);position:relative;max-height:92vh;overflow-y:auto}
+.modal-overlay.open .modal-box{transform:scale(1) translateY(0)}
+.modal-title{font-size:1.5rem;color:var(--brown);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.modal-close{position:absolute;top:16px;right:18px;background:var(--blush);border:none;width:34px;height:34px;border-radius:50%;font-size:1rem;cursor:pointer;color:var(--rose);font-weight:700;transition:background .2s,transform .2s;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--rose);color:white;transform:rotate(90deg)}
+.tag-input-wrap{display:flex;flex-wrap:wrap;gap:8px;background:var(--cream);border:1.5px solid var(--blush);border-radius:var(--radius-sm);padding:10px 14px;min-height:52px;align-items:center;cursor:text;transition:border-color .2s,box-shadow .2s}
+.tag-input-wrap:focus-within{border-color:var(--rose);box-shadow:0 0 0 4px rgba(242,167,167,.15)}
+.tag-pill{display:inline-flex;align-items:center;gap:6px;background:var(--lavender);color:#5a4080;border-radius:50px;padding:4px 12px;font-size:.82rem;font-weight:700}
+.tag-pill button{background:none;border:none;cursor:pointer;color:#5a4080;font-size:.9rem;line-height:1;padding:0 2px;transition:color .15s}
+.tag-pill button:hover{color:#c00}
+.tag-text-input{border:none;outline:none;background:transparent;font-family:'Nunito',sans-serif;font-size:.9rem;color:var(--text-dark);min-width:80px;flex:1}
+.tag-hint{font-size:.76rem;color:var(--text-light);margin-top:6px}
+.emoji-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.emoji-opt{font-size:1.5rem;cursor:pointer;padding:4px;border-radius:8px;border:2px solid transparent;transition:border-color .15s,transform .15s}
+.emoji-opt:hover,.emoji-opt.selected{border-color:var(--rose);transform:scale(1.15)}
+.color-row{display:flex;gap:12px;margin-top:4px}
+.color-opt{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .15s,border-color .15s}
+.color-opt:hover,.color-opt.selected{transform:scale(1.15);border-color:var(--brown)}
+.color-opt.c-rose{background:linear-gradient(135deg,var(--rose),var(--peach))}
+.color-opt.c-sage{background:linear-gradient(135deg,var(--sage),var(--mint))}
+.color-opt.c-lavender{background:linear-gradient(135deg,var(--lavender),var(--sky))}
+.modal-footer{display:flex;gap:12px;margin-top:28px;justify-content:flex-end}
+.save-btn{background:linear-gradient(135deg,#f2a7a7,#e88080);color:white;border:none;padding:13px 32px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(242,167,167,.45);transition:transform .2s,box-shadow .2s}
+.save-btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(242,167,167,.55)}
+.cancel-btn{background:var(--blush);color:var(--brown);border:none;padding:13px 26px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:background .2s}
+.cancel-btn:hover{background:var(--peach)}
+
+/* ── CONFIRM DELETE ── */
+.confirm-overlay{position:fixed;inset:0;background:rgba(61,44,30,.5);backdrop-filter:blur(4px);z-index:3000;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .25s}
+.confirm-overlay.open{opacity:1;pointer-events:auto}
+.confirm-box{background:var(--card-bg);border-radius:var(--radius);padding:32px 36px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(61,44,30,.25);text-align:center;transform:scale(.9);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.confirm-overlay.open .confirm-box{transform:scale(1)}
+.confirm-icon{font-size:2.8rem;margin-bottom:14px}
+.confirm-title{font-size:1.3rem;color:var(--brown);margin-bottom:10px}
+.confirm-sub{color:var(--text-mid);font-size:.92rem;margin-bottom:24px}
+.confirm-actions{display:flex;gap:12px;justify-content:center}
+.confirm-del{background:linear-gradient(135deg,#f2a7a7,#e03030);color:white;border:none;padding:12px 28px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.97rem;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(220,50,50,.35);transition:transform .2s}
+.confirm-del:hover{transform:scale(1.04)}
+.confirm-cancel{background:var(--blush);color:var(--brown);border:none;padding:12px 24px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.97rem;font-weight:700;cursor:pointer}
+
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+@media(max-width:768px){
+  .hero-inner{flex-direction:column;text-align:center}
+  .hero-btns{justify-content:center}
+  .mascot-wrap{width:220px;height:240px}
+  .about-card{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .contact-wrap{padding:28px 20px}
+  .proj-page-nav{gap:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ PAGE: HOME ═══════════════ -->
+<div class="page page-active" id="page-home">
+  <nav>
+    <div class="nav-logo" onclick="goHome()">✨ <span>My</span>Portfolio</div>
+    <ul class="nav-links">
+      <li><a onclick="goHome()">Home</a></li>
+      <li><a onclick="goHome();smoothTo('#about')">About</a></li>
+      <li><a onclick="navigateTo('projects')">Projects</a></li>
+      <li><a onclick="goHome();smoothTo('#skills')">Skills</a></li>
+      <li><a onclick="goHome();smoothTo('#social')">Social</a></li>
+      <li><a onclick="goHome();smoothTo('#contact')">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">🌸 Open to opportunities!</div>
+        <h1 class="hero-name">Hi, I'm <span class="highlight">Alyssa Rochelle</span> ✨</h1>
+        <p class="hero-tagline" id="typing-text"></p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="navigateTo('projects')">See My Work 👩🏻‍💻ᝰ.ᐟ</button>
+          <button class="btn-outline" onclick="smoothTo('#contact')">Say Hello 👋</button>
+        </div>
+      </div>
+      <div class="hero-mascot">
+        <div class="mascot-wrap">
+          <svg class="character-svg" viewBox="0 0 320 340" xmlns="http://www.w3.org/2000/svg" id="mascot-svg">
+            <ellipse cx="160" cy="145" rx="92" ry="95" fill="#6b3e26"/>
+            <ellipse cx="78" cy="180" rx="24" ry="40" fill="#6b3e26"/>
+            <ellipse cx="242" cy="180" rx="24" ry="40" fill="#6b3e26"/>
+            <ellipse cx="160" cy="170" rx="82" ry="88" fill="#ffdfc0"/>
+            <path d="M85,130 Q100,95 130,85 Q160,78 190,85 Q218,93 232,128 Q210,108 160,106 Q110,108 85,130Z" fill="#7a4030"/>
+            <ellipse cx="80" cy="175" rx="14" ry="18" fill="#ffdfc0"/>
+            <ellipse cx="240" cy="175" rx="14" ry="18" fill="#ffdfc0"/>
+            <ellipse cx="80" cy="175" rx="8" ry="12" fill="#f5c0a0"/>
+            <ellipse cx="240" cy="175" rx="8" ry="12" fill="#f5c0a0"/>
+            <rect x="102" y="158" width="46" height="36" rx="12" fill="none" stroke="#b5651d" stroke-width="3.5"/>
+            <rect x="172" y="158" width="46" height="36" rx="12" fill="none" stroke="#b5651d" stroke-width="3.5"/>
+            <line x1="148" y1="172" x2="172" y2="172" stroke="#b5651d" stroke-width="3"/>
+            <line x1="78" y1="170" x2="102" y2="170" stroke="#b5651d" stroke-width="2.5"/>
+            <line x1="218" y1="170" x2="240" y2="170" stroke="#b5651d" stroke-width="2.5"/>
+            <ellipse cx="125" cy="176" rx="16" ry="14" fill="white"/>
+            <g id="left-eye-group">
+              <circle id="left-iris" cx="125" cy="176" r="8" fill="#3d2c1e"/>
+              <circle id="left-pupil" cx="125" cy="176" r="4.5" fill="#1a0f00"/>
+              <circle id="left-shine1" cx="128" cy="173" r="2" fill="white"/>
+              <circle id="left-shine2" cx="122" cy="179" r="1" fill="white" opacity=".7"/>
+            </g>
+            <ellipse cx="195" cy="176" rx="16" ry="14" fill="white"/>
+            <g id="right-eye-group">
+              <circle id="right-iris" cx="195" cy="176" r="8" fill="#3d2c1e"/>
+              <circle id="right-pupil" cx="195" cy="176" r="4.5" fill="#1a0f00"/>
+              <circle id="right-shine1" cx="198" cy="173" r="2" fill="white"/>
+              <circle id="right-shine2" cx="192" cy="179" r="1" fill="white" opacity=".7"/>
+            </g>
+            <text x="103" y="155" font-size="10" fill="#b5651d" font-weight="bold">×</text>
+            <text x="213" y="155" font-size="10" fill="#b5651d" font-weight="bold">×</text>
+            <path d="M156,198 Q160,205 164,198" stroke="#d4956a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M145,214 Q160,228 175,214" stroke="#c07060" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <ellipse cx="108" cy="210" rx="18" ry="10" fill="#f7a8a8" opacity=".5"/>
+            <ellipse cx="212" cy="210" rx="18" ry="10" fill="#f7a8a8" opacity=".5"/>
+            <path d="M100,250 Q80,260 75,310 L245,310 Q240,260 220,250 Q200,242 160,240 Q120,242 100,250Z" fill="#f2a7a7"/>
+            <path d="M135,248 Q160,265 185,248" stroke="#e88080" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M80,270 Q50,280 55,310" stroke="#ffdfc0" stroke-width="20" stroke-linecap="round" fill="none"/>
+            <path d="M240,270 Q270,280 265,310" stroke="#ffdfc0" stroke-width="20" stroke-linecap="round" fill="none"/>
+            <rect x="118" y="285" width="64" height="46" rx="5" fill="#a8c5a0"/>
+            <rect x="118" y="285" width="8" height="46" rx="3" fill="#7aaa72"/>
+            <line x1="126" y1="300" x2="178" y2="300" stroke="#6b9960" stroke-width="1.5" opacity=".6"/>
+            <line x1="126" y1="310" x2="178" y2="310" stroke="#6b9960" stroke-width="1.5" opacity=".6"/>
+            <line x1="126" y1="320" x2="178" y2="320" stroke="#6b9960" stroke-width="1.5" opacity=".6"/>
+            <text x="52" y="130" font-size="16" opacity=".6">✦</text>
+            <text x="258" y="140" font-size="12" opacity=".5">✦</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title fade-in">About Me 🌸</h2>
+      <p class="section-subtitle fade-in">A little peek into my world~ ✨</p>
+      <div class="about-card fade-in">
+        <div>
+          <div class="about-emoji">👩‍💻</div>
+          <div class="about-text">
+            <h3>Hello, I'm a Beginner Dev!</h3>
+            <p>I started my coding journey just recently, and it's been the most exciting adventure! Every bug I fix feels like solving a little puzzle, and every project I build feels like bringing a tiny world to life. I'm still learning — and that's totally okay!<br><br>When I'm not coding, you'll find me doodling, drinking too much milk tea, or watching tutorials at 2am. 🍵✨</p>
+          </div>
+        </div>
+        <ul class="about-fun-facts">
+          <li>📍 Based in the Philippines PH</li>
+          <li>🎯 Goal: Build beautiful, cute, and helpful apps</li>
+          <li>🫗 Powered by water &amp; curiosity</li>
+          <li>🌱 Always growing, always learning</li>
+          <li>💌 Open to internships</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="home-projects-preview">
+    <div class="container">
+      <h2 class="section-title fade-in">My Projects 🗃️</h2>
+      <p class="section-subtitle fade-in">A peek at what I've been building~ ✨</p>
+      <div class="preview-grid" id="preview-grid"></div>
+      <div class="see-all-wrap fade-in">
+        <button class="see-all-btn" onclick="navigateTo('projects')"><i class="fas fa-folder-open"></i> See All Projects</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="tech">
+    <div class="container">
+      <h2 class="section-title fade-in">Tech Stack</h2>
+      <p class="section-subtitle fade-in">The tools I'm learning to wield~ ✨</p>
+      <div class="tech-grid fade-in">
+        <div class="tech-pill"><span class="tech-icon">🟠</span> HTML5</div>
+        <div class="tech-pill"><span class="tech-icon">🔵</span> CSS3</div>
+        <div class="tech-pill"><span class="tech-icon">🟡</span> JavaScript</div>
+        <div class="tech-pill"><span class="tech-icon">🔴</span> Git &amp; GitHub</div>
+        <div class="tech-pill"><span class="tech-icon">🟣</span> Figma</div>
+        <div class="tech-pill"><span class="tech-icon">🐍</span> Python</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title fade-in">Skills Progress</h2>
+      <p class="section-subtitle fade-in">Auto-calculated from your real projects~</p>
+      <div class="skills-note fade-in">
+        <i class="fas fa-magic"></i>
+        These bars are <strong>automatically updated</strong> based on the technologies you add to your projects.
+        The more projects use a tech, the higher it scores. Add projects to see this grow! 🌸
+      </div>
+      <div class="skills-grid" id="skills-grid"></div>
+    </div>
+  </section>
+
+  <section id="social">
+    <div class="container">
+      <h2 class="section-title fade-in">Find Me Online 🌐</h2>
+      <p class="section-subtitle fade-in">Let's connect and grow together!</p>
+      <div class="social-row fade-in">
+        <a href="https://www.instagram.com/lyss_rchll/" target="_blank" class="social-btn instagram"><i class="fab fa-instagram s-icon" style="color:#e1306c"></i><span class="s-label">Instagram</span></a>
+        <a href="https://www.facebook.com/ali.rochelleee" target="_blank" class="social-btn facebook"><i class="fab fa-facebook s-icon" style="color:#1877f2"></i><span class="s-label">Facebook</span></a>
+        <a href="https://github.com/ardometita" target="_blank" class="social-btn github"><i class="fab fa-github s-icon" style="color:#333"></i><span class="s-label">GitHub</span></a>
+        <a href="https://www.linkedin.com/in/alyssa-rochelle-dometita-04441a409/" target="_blank" class="social-btn linkedin"><i class="fab fa-linkedin s-icon" style="color:#0a66c2"></i><span class="s-label">LinkedIn</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title fade-in">Say Hello! 💌</h2>
+      <p class="section-subtitle fade-in">I'd love to hear from you~</p>
+      <div class="contact-wrap fade-in">
+        <div class="form-group"><label>Your Name</label><input type="text" id="f-name" placeholder="e.g. Mochi 🍡"/></div>
+        <div class="form-group"><label>Email Address</label><input type="email" id="f-email" placeholder="hello@example.com"/></div>
+        <div class="form-group"><label>Message</label><textarea id="f-msg" rows="5" placeholder="Write anything — a hi, or a bug report 🐛"></textarea></div>
+        <button type="button" class="submit-btn" onclick="sendMessage()">Send Message 🌼</button>
+      </div>
+    </div>
+  </section>
+
+  <footer><p>Made with <span>♥</span> by <strong>Alyssa Rochelle</strong> · Beginner Developer · 2025 ✨</p></footer>
+</div>
+
+
+<!-- ═══════════════ PAGE: PROJECTS ═══════════════ -->
+<div class="page page-right" id="page-projects">
+  <nav class="proj-page-nav">
+    <div class="proj-page-nav-left">
+      <button class="back-btn" onclick="navigateBack('projects')"><i class="fas fa-arrow-left"></i> Back</button>
+      <span class="proj-page-title">🗃️ My Projects</span>
+    </div>
+    <button class="add-proj-btn" onclick="openAddModal()"><i class="fas fa-plus"></i> Add Project</button>
+  </nav>
+  <div class="projects-page-body">
+    <div class="projects-filter" id="filter-row">
+      <button class="filter-btn active" data-filter="all">All ✨</button>
+      <button class="filter-btn" data-filter="Done">Done</button>
+      <button class="filter-btn" data-filter="Ongoing">Ongoing</button>
+      <button class="filter-btn" data-filter="Improving">Improving</button>
+      <button class="filter-btn" data-filter="Paused">Paused</button>
+      <button class="filter-btn" data-filter="Beginner">Beginner</button>
+    </div>
+    <div class="projects-full-grid" id="projects-full-grid"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ PAGE: PROJECT DETAIL ═══════════════ -->
+<div class="page page-right" id="page-project-detail">
+  <nav class="detail-nav">
+    <button class="back-btn" onclick="navigateBack('project-detail')"><i class="fas fa-arrow-left"></i> Back to Projects</button>
+  </nav>
+  <div class="detail-body">
+    <div class="detail-hero" id="detail-hero">
+      <div class="detail-emoji" id="detail-emoji"></div>
+      <h2 class="detail-title" id="detail-title"></h2>
+      <div class="detail-status-row" id="detail-status-row"></div>
+      <p class="detail-desc" id="detail-desc"></p>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-label">💡 What I Learned</div>
+      <div class="detail-section-val" id="detail-learned"></div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-label">🛠 Technologies Used</div>
+      <div class="card-tags" id="detail-tags"></div>
+    </div>
+    <div class="detail-section" id="detail-link-section"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ ADD / EDIT MODAL ═══════════════ -->
+<div class="modal-overlay" id="proj-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3 class="modal-title" id="modal-title-label">➕ Add New Project</h3>
+
+    <div class="form-group">
+      <label>Pick an Emoji</label>
+      <div class="emoji-row" id="emoji-row">
+        <span class="emoji-opt selected" data-emoji="🌐">🌐</span>
+        <span class="emoji-opt" data-emoji="📝">📝</span>
+        <span class="emoji-opt" data-emoji="🎮">🎮</span>
+        <span class="emoji-opt" data-emoji="🌦">🌦</span>
+        <span class="emoji-opt" data-emoji="📖">📖</span>
+        <span class="emoji-opt" data-emoji="🔢">🔢</span>
+        <span class="emoji-opt" data-emoji="🎨">🎨</span>
+        <span class="emoji-opt" data-emoji="🤖">🤖</span>
+        <span class="emoji-opt" data-emoji="📱">📱</span>
+        <span class="emoji-opt" data-emoji="🛒">🛒</span>
+        <span class="emoji-opt" data-emoji="💬">💬</span>
+        <span class="emoji-opt" data-emoji="🔍">🔍</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Card Color</label>
+      <div class="color-row" id="color-row">
+        <div class="color-opt c-rose selected" data-color="color-rose" title="Rose"></div>
+        <div class="color-opt c-sage" data-color="color-sage" title="Sage Green"></div>
+        <div class="color-opt c-lavender" data-color="color-lavender" title="Lavender"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Project Name *</label>
+      <input type="text" id="m-title" placeholder="e.g. To-Do List App"/>
+    </div>
+
+    <div class="form-group">
+      <label>Description *</label>
+      <textarea id="m-desc" rows="3" placeholder="What does this project do?"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>What I Learned</label>
+      <textarea id="m-learned" rows="3" placeholder="What skills or concepts did this teach you?"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Status</label>
+      <select id="m-status">
+        <option value="Beginner">Beginner</option>
+        <option value="Ongoing">Ongoing</option>
+        <option value="Improving">Improving</option>
+        <option value="Paused">Paused</option>
+        <option value="Done">Done</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Technologies / Languages Used</label>
+      <div class="tag-input-wrap" id="tag-wrap" onclick="document.getElementById('tag-input').focus()">
+        <input type="text" id="tag-input" class="tag-text-input" placeholder="Type a tech and press Enter…"/>
+      </div>
+      <div class="tag-hint">💡 Type a name (e.g. "HTML", "Python") and press <strong>Enter</strong> or <strong>comma</strong> to add it. These power your Skills chart!</div>
+    </div>
+
+    <div class="form-group">
+      <label>GitHub Repo Link <span style="font-weight:400;color:var(--text-light)">(optional)</span></label>
+      <input type="url" id="m-github" placeholder="https://github.com/yourusername/project"/>
+    </div>
+
+    <div class="form-group">
+      <label>Live Demo Link <span style="font-weight:400;color:var(--text-light)">(optional)</span></label>
+      <input type="url" id="m-live" placeholder="https://yourproject.netlify.app"/>
+    </div>
+
+    <div class="modal-footer">
+      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+      <button class="save-btn" onclick="saveProject()">Save Project ✨</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ CONFIRM DELETE ═══════════════ -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">🗑️</div>
+    <h3 class="confirm-title">Delete this project?</h3>
+    <p class="confirm-sub">This action can't be undone. The project will be removed from your portfolio and skills will recalculate.</p>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" onclick="closeConfirm()">Keep It</button>
+      <button class="confirm-del" onclick="confirmDelete()">Yes, Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+/* ═══════════════════════════════════
+   DATA STORAGE
+═══════════════════════════════════ */
+const STORE_KEY = 'portfolio_projects_v2';
+
+const TECH_COLORS = {
+  'html':'#e44d26','html5':'#e44d26','css':'#264de4','css3':'#264de4',
+  'javascript':'#f0b90b','js':'#f0b90b','python':'#3776ab','py':'#3776ab',
+  'typescript':'#3178c6','ts':'#3178c6','react':'#61dafb','vue':'#42b883',
+  'node':'#68a063','nodejs':'#68a063','git':'#f05032','github':'#333333',
+  'figma':'#a259ff','api':'#e67e22','rest':'#e67e22','sql':'#336791',
+  'mysql':'#336791','mongodb':'#4db33d','firebase':'#ffca28','tailwind':'#06b6d4',
+  'bootstrap':'#7952b3','sass':'#cc6699','php':'#777bb3','java':'#f89820',
+  'c++':'#00599c','swift':'#fa7343','flutter':'#54c5f8','kotlin':'#7f52ff',
+};
+
+const TECH_EMOJI = {
+  'html':'🟠','html5':'🟠','css':'🔵','css3':'🔵','javascript':'🟡','js':'🟡',
+  'python':'🐍','py':'🐍','react':'⚛️','vue':'💚','node':'🟢','nodejs':'🟢',
+  'git':'🔴','github':'⚫','figma':'🟣','typescript':'🔷','ts':'🔷',
+  'api':'🔶','sql':'🗄️','mysql':'🗄️','mongodb':'🍃','firebase':'🔥',
+  'tailwind':'🌊','bootstrap':'🅱️','sass':'💅','php':'🐘','java':'☕',
+  'flutter':'💙','kotlin':'🎯','swift':'🍎',
+};
+
+function getProjects() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
+  catch(e) { return []; }
+}
+
+function saveProjects(arr) {
+  localStorage.setItem(STORE_KEY, JSON.stringify(arr));
+}
+
+/* ═══════════════════════════════════
+   HELPERS
+═══════════════════════════════════ */
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function statusLabel(s) {
+  const map = {
+    Done:'Done', Ongoing:'Ongoing',
+    Improving:'Improving', Paused:'Paused', Beginner:'Beginner'
+  };
+  return map[s] || s;
+}
+
+/* ═══════════════════════════════════
+   TOAST
+═══════════════════════════════════ */
+function showToast(msg, duration) {
+  duration = duration || 3000;
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, duration);
+}
+
+/* ═══════════════════════════════════
+   PAGE ROUTING
+═══════════════════════════════════ */
+let pageHistory = ['home'];
+
+function navigateTo(page) {
+  const current = pageHistory[pageHistory.length - 1];
+  const fromEl = document.getElementById('page-' + current);
+  const toEl   = document.getElementById('page-' + page);
+  fromEl.classList.remove('page-active');
+  fromEl.classList.add('page-left');
+  toEl.classList.remove('page-right');
+  toEl.classList.add('page-active');
+  toEl.scrollTop = 0;
+  pageHistory.push(page);
+  if (page === 'projects') renderFullGrid();
+}
+
+function navigateBack(current) {
+  pageHistory.pop();
+  const prev = pageHistory[pageHistory.length - 1];
+  const fromEl = document.getElementById('page-' + current);
+  const toEl   = document.getElementById('page-' + prev);
+  fromEl.classList.remove('page-active');
+  fromEl.classList.add('page-right');
+  toEl.classList.remove('page-left');
+  toEl.classList.add('page-active');
+  toEl.scrollTop = 0;
+  if (prev === 'projects') renderFullGrid();
+}
+
+function goHome() {
+  ['projects','project-detail'].forEach(function(p) {
+    const el = document.getElementById('page-' + p);
+    el.classList.remove('page-active','page-left');
+    el.classList.add('page-right');
+  });
+  const home = document.getElementById('page-home');
+  home.classList.add('page-active');
+  home.classList.remove('page-left','page-right');
+  pageHistory = ['home'];
+}
+
+function smoothTo(selector) {
+  setTimeout(function(){
+    const el = document.querySelector(selector);
+    if (el) el.scrollIntoView({ behavior:'smooth' });
+  }, 120);
+}
+
+/* ═══════════════════════════════════
+   CONTACT FORM
+═══════════════════════════════════ */
+function sendMessage() {
+  const name  = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const msg   = document.getElementById('f-msg').value.trim();
+
+  if (!name || !email || !msg) {
+    showToast('⚠️ Please fill in all fields!');
+    return;
+  }
+
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Sending... 🕊️';
+  btn.disabled = true;
+
+  fetch('http://localhost:3000/send-message', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, message: msg })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (data.success) {
+      document.getElementById('f-name').value  = '';
+      document.getElementById('f-email').value = '';
+      document.getElementById('f-msg').value   = '';
+      showToast('💌 Message sent! Thank you, ' + name + '~');
+    } else {
+      showToast('❌ Failed to send. Try again~');
+    }
+    btn.textContent = 'Send Message 🌼';
+    btn.disabled = false;
+  })
+  .catch(function() {
+    showToast('❌ Could not reach server. Is it running?');
+    btn.textContent = 'Send Message 🌼';
+    btn.disabled = false;
+  });
+}
+
+/* ═══════════════════════════════════
+   PREVIEW GRID (Home — shows up to 3)
+═══════════════════════════════════ */
+function renderPreviewGrid() {
+  const projects = getProjects();
+  const grid = document.getElementById('preview-grid');
+  const preview = projects.slice(0, 3);
+
+  if (preview.length === 0) {
+    grid.innerHTML = '<p style="text-align:center;color:var(--text-light);grid-column:1/-1;padding:40px 0">No projects yet! Head over to the Projects page to add your first one. 🌸</p>';
+    return;
+  }
+
+  grid.innerHTML = preview.map(function(p) {
+    return '<div class="preview-card ' + p.color + '" onclick="openDetail(\'' + p.id + '\')">' +
+      '<div class="card-emoji">' + p.emoji + '</div>' +
+      '<div class="card-title">' + escHtml(p.title) + '</div>' +
+      '<div class="card-desc">'  + escHtml(p.desc)  + '</div>' +
+      '<span class="card-status status-' + p.status + '">' + statusLabel(p.status) + '</span>' +
+      '<div class="card-tags">' + (p.tags||[]).map(function(t){ return '<span class="card-tag">' + escHtml(t) + '</span>'; }).join('') + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ═══════════════════════════════════
+   FULL GRID (Projects page)
+═══════════════════════════════════ */
+let activeFilter = 'all';
+
+function renderFullGrid() {
+  const projects = getProjects();
+  const grid = document.getElementById('projects-full-grid');
+  const filtered = activeFilter === 'all'
+    ? projects
+    : projects.filter(function(p){ return p.status === activeFilter; });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🌸</div><p>No projects here yet!<br>Click <strong>Add Project</strong> to get started.</p></div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(function(p) {
+    return '<div class="full-card ' + p.color + '">' +
+      '<div class="full-card-body">' +
+        '<div class="full-card-emoji">' + p.emoji + '</div>' +
+        '<div class="full-card-title">' + escHtml(p.title) + '</div>' +
+        '<div class="full-card-desc">'  + escHtml(p.desc)  + '</div>' +
+        '<div class="full-card-tags">'  + (p.tags||[]).map(function(t){ return '<span class="card-tag">' + escHtml(t) + '</span>'; }).join('') + '</div>' +
+        '<div class="full-card-footer">' +
+          '<span class="card-status status-' + p.status + '">' + statusLabel(p.status) + '</span>' +
+          '<div class="card-actions">' +
+            '<button class="view-btn"   onclick="openDetail(\''    + p.id + '\')"><i class="fas fa-eye"></i> View</button>' +
+            '<button class="edit-btn"   onclick="openEditModal(\'' + p.id + '\')"><i class="fas fa-pen"></i> Edit</button>' +
+            '<button class="delete-btn" onclick="askDelete(\''     + p.id + '\')"><i class="fas fa-trash"></i></button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* Filter row */
+document.getElementById('filter-row').addEventListener('click', function(e) {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  activeFilter = btn.dataset.filter;
+  renderFullGrid();
+});
+
+/* ═══════════════════════════════════
+   DETAIL PAGE
+═══════════════════════════════════ */
+function openDetail(id) {
+  const p = getProjects().find(function(x){ return x.id === id; });
+  if (!p) return;
+
+  document.getElementById('detail-hero').className    = 'detail-hero ' + p.color;
+  document.getElementById('detail-emoji').textContent = p.emoji;
+  document.getElementById('detail-title').textContent = p.title;
+  document.getElementById('detail-status-row').innerHTML =
+    '<span class="card-status status-' + p.status + '">' + statusLabel(p.status) + '</span>';
+  document.getElementById('detail-desc').textContent    = p.desc;
+  document.getElementById('detail-learned').textContent = p.learned || 'Nothing noted yet — but every project teaches something! 🌱';
+  document.getElementById('detail-tags').innerHTML = (p.tags||[]).map(function(t){
+    return '<span class="card-tag">' + escHtml(t) + '</span>';
+  }).join('');
+
+  let linkHtml = '<div class="detail-section-label"><i class="fas fa-link"></i> Links</div>';
+  if (p.github) linkHtml += '<a href="' + escHtml(p.github) + '" target="_blank" class="github-link-btn"><i class="fab fa-github"></i> View on GitHub</a>';
+  if (p.live)   linkHtml += '<a href="' + escHtml(p.live)   + '" target="_blank" class="live-link-btn"><i class="fas fa-external-link-alt"></i> Live Demo</a>';
+  if (!p.github && !p.live) linkHtml += '<span class="no-link-note"><i class="fas fa-clock"></i> Links coming soon!</span>';
+  document.getElementById('detail-link-section').innerHTML = linkHtml;
+
+  navigateTo('project-detail');
+}
+
+/* ═══════════════════════════════════
+   MODAL — ADD / EDIT
+═══════════════════════════════════ */
+let editingId     = null;
+let modalTags     = [];
+let selectedEmoji = '🌐';
+let selectedColor = 'color-rose';
+
+function openAddModal() {
+  editingId     = null;
+  modalTags     = [];
+  selectedEmoji = '🌐';
+  selectedColor = 'color-rose';
+  document.getElementById('modal-title-label').textContent = '➕ Add New Project';
+  document.getElementById('m-title').value   = '';
+  document.getElementById('m-desc').value    = '';
+  document.getElementById('m-learned').value = '';
+  document.getElementById('m-status').value  = 'Beginner';
+  document.getElementById('m-github').value  = '';
+  document.getElementById('m-live').value    = '';
+  resetEmojiPicker('🌐');
+  resetColorPicker('color-rose');
+  renderTagPills();
+  document.getElementById('proj-modal').classList.add('open');
+}
+
+function openEditModal(id) {
+  const p = getProjects().find(function(x){ return x.id === id; });
+  if (!p) return;
+  editingId     = id;
+  modalTags     = (p.tags || []).slice();
+  selectedEmoji = p.emoji;
+  selectedColor = p.color;
+  document.getElementById('modal-title-label').textContent = '✏️ Edit Project';
+  document.getElementById('m-title').value   = p.title;
+  document.getElementById('m-desc').value    = p.desc;
+  document.getElementById('m-learned').value = p.learned || '';
+  document.getElementById('m-status').value  = p.status;
+  document.getElementById('m-github').value  = p.github || '';
+  document.getElementById('m-live').value    = p.live   || '';
+  resetEmojiPicker(p.emoji);
+  resetColorPicker(p.color);
+  renderTagPills();
+  document.getElementById('proj-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('proj-modal').classList.remove('open');
+}
+
+function saveProject() {
+  const title = document.getElementById('m-title').value.trim();
+  const desc  = document.getElementById('m-desc').value.trim();
+  if (!title || !desc) {
+    showToast('⚠️ Project name and description are required!');
+    return;
+  }
+
+  /* Flush any half-typed tag */
+  const rawTag = document.getElementById('tag-input').value.trim();
+  if (rawTag) { modalTags.push(rawTag); document.getElementById('tag-input').value = ''; }
+
+  const projects = getProjects();
+  const proj = {
+    id:      editingId || Date.now().toString(),
+    emoji:   selectedEmoji,
+    color:   selectedColor,
+    title:   title,
+    desc:    desc,
+    learned: document.getElementById('m-learned').value.trim(),
+    status:  document.getElementById('m-status').value,
+    tags:    modalTags.slice(),
+    github:  document.getElementById('m-github').value.trim(),
+    live:    document.getElementById('m-live').value.trim(),
+  };
+
+  if (editingId) {
+    const idx = projects.findIndex(function(p){ return p.id === editingId; });
+    if (idx !== -1) projects[idx] = proj; else projects.unshift(proj);
+  } else {
+    projects.unshift(proj);
+  }
+
+  saveProjects(projects);
+  closeModal();
+  renderFullGrid();
+  renderPreviewGrid();
+  renderSkills();
+  showToast(editingId ? '✅ Project updated!' : '🌸 Project added!');
+}
+
+/* Emoji picker */
+document.getElementById('emoji-row').addEventListener('click', function(e) {
+  const opt = e.target.closest('.emoji-opt');
+  if (!opt) return;
+  document.querySelectorAll('.emoji-opt').forEach(function(o){ o.classList.remove('selected'); });
+  opt.classList.add('selected');
+  selectedEmoji = opt.dataset.emoji;
+});
+
+function resetEmojiPicker(emoji) {
+  document.querySelectorAll('.emoji-opt').forEach(function(o){
+    o.classList.toggle('selected', o.dataset.emoji === emoji);
+  });
+  selectedEmoji = emoji;
+}
+
+/* Color picker */
+document.getElementById('color-row').addEventListener('click', function(e) {
+  const opt = e.target.closest('.color-opt');
+  if (!opt) return;
+  document.querySelectorAll('.color-opt').forEach(function(o){ o.classList.remove('selected'); });
+  opt.classList.add('selected');
+  selectedColor = opt.dataset.color;
+});
+
+function resetColorPicker(color) {
+  document.querySelectorAll('.color-opt').forEach(function(o){
+    o.classList.toggle('selected', o.dataset.color === color);
+  });
+  selectedColor = color;
+}
+
+/* Tag input */
+function renderTagPills() {
+  const wrap  = document.getElementById('tag-wrap');
+  const input = document.getElementById('tag-input');
+  wrap.innerHTML = '';
+  modalTags.forEach(function(tag, i) {
+    const pill = document.createElement('span');
+    pill.className = 'tag-pill';
+    pill.innerHTML = escHtml(tag) + ' <button type="button" onclick="removeTag(' + i + ')">×</button>';
+    wrap.appendChild(pill);
+  });
+  wrap.appendChild(input);
+  input.value = '';
+}
+
+function removeTag(i) {
+  modalTags.splice(i, 1);
+  renderTagPills();
+}
+
+function addTag(val) {
+  const tag = val.trim().replace(/,/g,'');
+  if (tag && !modalTags.includes(tag)) {
+    modalTags.push(tag);
+    renderTagPills();
+  }
+}
+
+document.getElementById('tag-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    addTag(e.target.value);
+  }
+  if (e.key === 'Backspace' && e.target.value === '' && modalTags.length > 0) {
+    modalTags.pop();
+    renderTagPills();
+  }
+});
+
+document.getElementById('tag-input').addEventListener('blur', function(e) {
+  if (e.target.value.trim()) addTag(e.target.value);
+});
+
+/* Close modal on overlay click */
+document.getElementById('proj-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+/* ═══════════════════════════════════
+   DELETE
+═══════════════════════════════════ */
+let deletingId = null;
+
+function askDelete(id) {
+  deletingId = id;
+  document.getElementById('confirm-overlay').classList.add('open');
+}
+
+function closeConfirm() {
+  deletingId = null;
+  document.getElementById('confirm-overlay').classList.remove('open');
+}
+
+function confirmDelete() {
+  if (!deletingId) return;
+  const projects = getProjects().filter(function(p){ return p.id !== deletingId; });
+  saveProjects(projects);
+  closeConfirm();
+  renderFullGrid();
+  renderPreviewGrid();
+  renderSkills();
+  showToast('Project deleted.');
+}
+
+/* ═══════════════════════════════════
+   SKILLS (auto-calculated from tags)
+═══════════════════════════════════ */
+function renderSkills() {
+  const projects = getProjects();
+  const techCount = {};
+
+  projects.forEach(function(p) {
+    (p.tags || []).forEach(function(t) {
+      const key = t.toLowerCase().trim();
+      if (key) techCount[key] = (techCount[key] || 0) + 1;
+    });
+  });
+
+  const total   = projects.length || 1;
+  const entries = Object.entries(techCount).sort(function(a,b){ return b[1]-a[1]; });
+  const grid    = document.getElementById('skills-grid');
+
+  if (entries.length === 0) {
+    grid.innerHTML = '<p style="text-align:center;color:var(--text-light);grid-column:1/-1;padding:30px 0">Add projects with tech tags to see your skills grow here! 🌱</p>';
+    return;
+  }
+
+  grid.innerHTML = entries.map(function(entry) {
+    const tech  = entry[0];
+    const count = entry[1];
+    const pct   = Math.min(Math.round((count / total) * 100), 100);
+    const color = TECH_COLORS[tech] || '#f2a7a7';
+    const emoji = TECH_EMOJI[tech]  || '💻';
+    const display = tech.charAt(0).toUpperCase() + tech.slice(1);
+    return '<div class="skill-item">' +
+      '<div class="skill-header">' +
+        '<div class="skill-name">' + emoji + ' ' + escHtml(display) + '</div>' +
+        '<div class="skill-meta">' + count + ' project' + (count > 1 ? 's' : '') + '</div>' +
+      '</div>' +
+      '<div class="skill-bar-bg"><div class="skill-bar" data-width="' + pct + '%" style="background:' + color + '"></div></div>' +
+      '<div class="skill-count">' + pct + '% usage across projects</div>' +
+    '</div>';
+  }).join('');
+
+  /* Animate bars after render */
+  requestAnimationFrame(function(){
+    document.querySelectorAll('.skill-bar').forEach(function(bar){
+      bar.style.width = '0';
+      requestAnimationFrame(function(){
+        bar.style.width = bar.dataset.width;
+      });
+    });
+  });
+}
+
+/* ═══════════════════════════════════
+   FADE-IN ON SCROLL
+═══════════════════════════════════ */
+const fadeObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e){
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-in').forEach(function(el){ fadeObs.observe(el); });
+
+/* ═══════════════════════════════════
+   TYPING ANIMATION
+═══════════════════════════════════ */
+const phrases = [
+  'Beginner Web Developer 🌱',
+  'UI Enthusiast ✨',
+  'Lifelong Learner 📚',
+  'Bug Fixer in Training 🐛',
+  'Building cute things one commit at a time 💻',
+];
+let phraseIdx = 0, charIdx = 0, deleting = false;
+const typingEl = document.getElementById('typing-text');
+
+function type() {
+  const phrase = phrases[phraseIdx];
+  if (!deleting) {
+    typingEl.innerHTML = escHtml(phrase.slice(0, charIdx + 1)) + '<span class="cursor-blink">|</span>';
+    charIdx++;
+    if (charIdx === phrase.length) {
+      deleting = true;
+      setTimeout(type, 1800);
+      return;
+    }
+  } else {
+    typingEl.innerHTML = escHtml(phrase.slice(0, charIdx)) + '<span class="cursor-blink">|</span>';
+    charIdx--;
+    if (charIdx < 0) {
+      deleting   = false;
+      phraseIdx  = (phraseIdx + 1) % phrases.length;
+      charIdx    = 0;
+    }
+  }
+  setTimeout(type, deleting ? 48 : 82);
+}
+type();
+
+/* ═══════════════════════════════════
+   MASCOT EYE TRACKING
+═══════════════════════════════════ */
+document.addEventListener('mousemove', function(e) {
+  const svg = document.getElementById('mascot-svg');
+  if (!svg) return;
+  const rect = svg.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top  + rect.height / 2;
+  const dx = e.clientX - cx;
+  const dy = e.clientY - cy;
+  const angle = Math.atan2(dy, dx);
+  const dist  = Math.min(Math.hypot(dx, dy) / 12, 4);
+  const ox = Math.cos(angle) * dist;
+  const oy = Math.sin(angle) * dist;
+
+  [['left-iris',125,176],['left-pupil',125,176]].forEach(function(x){
+    const el = document.getElementById(x[0]);
+    if (el) { el.setAttribute('cx', x[1]+ox); el.setAttribute('cy', x[2]+oy); }
+  });
+  [['right-iris',195,176],['right-pupil',195,176]].forEach(function(x){
+    const el = document.getElementById(x[0]);
+    if (el) { el.setAttribute('cx', x[1]+ox); el.setAttribute('cy', x[2]+oy); }
+  });
+});
+
+/* ═══════════════════════════════════
+   INIT
+═══════════════════════════════════ */
+renderPreviewGrid();
+renderSkills();
+</script>
+</body>
+</html>

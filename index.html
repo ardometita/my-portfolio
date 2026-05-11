@@ -155,7 +155,6 @@ footer span{color:var(--rose)}
 .proj-page-title{font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:var(--brown)}
 .add-proj-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#a8c5a0,#7aaa72);color:white;border:none;padding:11px 24px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(122,197,122,.35);transition:transform .2s,box-shadow .2s}
 .add-proj-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 8px 24px rgba(122,197,122,.45)}
-
 .projects-page-body{padding:40px 20px 80px;max-width:1100px;margin:0 auto}
 .projects-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;justify-content:center}
 .filter-btn{padding:8px 22px;border-radius:50px;border:2px solid var(--blush);background:var(--card-bg);color:var(--text-mid);font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
@@ -163,7 +162,6 @@ footer span{color:var(--rose)}
 .projects-full-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:26px}
 .empty-state{text-align:center;padding:60px 20px;color:var(--text-light)}
 .empty-state .empty-icon{font-size:3rem;margin-bottom:14px}
-
 .full-card{background:var(--card-bg);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1.5px solid transparent;transition:transform .25s,box-shadow .25s,border-color .25s;display:flex;flex-direction:column}
 .full-card::before{content:'';display:block;height:5px}
 .full-card.color-rose::before{background:linear-gradient(90deg,var(--rose),var(--peach))}
@@ -421,15 +419,18 @@ footer span{color:var(--rose)}
     </div>
   </section>
 
+  <!-- ✅ CONTACT — Formspree, no JS needed -->
   <section id="contact">
     <div class="container">
       <h2 class="section-title fade-in">Say Hello! 💌</h2>
       <p class="section-subtitle fade-in">I'd love to hear from you~</p>
       <div class="contact-wrap fade-in">
-        <div class="form-group"><label>Your Name</label><input type="text" id="f-name" placeholder="e.g. Mochi 🍡"/></div>
-        <div class="form-group"><label>Email Address</label><input type="email" id="f-email" placeholder="hello@example.com"/></div>
-        <div class="form-group"><label>Message</label><textarea id="f-msg" rows="5" placeholder="Write anything — a hi, or a bug report 🐛"></textarea></div>
-        <button type="button" class="submit-btn" onclick="sendMessage()">Send Message 🌼</button>
+        <form action="https://formspree.io/f/xbdwqojz" method="POST">
+          <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="e.g. Mochi 🍡" required/></div>
+          <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="hello@example.com" required/></div>
+          <div class="form-group"><label>Message</label><textarea name="message" rows="5" placeholder="Write anything — a hi, or a bug report 🐛" required></textarea></div>
+          <button type="submit" class="submit-btn">Send Message 🌼</button>
+        </form>
       </div>
     </div>
   </section>
@@ -491,7 +492,6 @@ footer span{color:var(--rose)}
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <h3 class="modal-title" id="modal-title-label">➕ Add New Project</h3>
-
     <div class="form-group">
       <label>Pick an Emoji</label>
       <div class="emoji-row" id="emoji-row">
@@ -509,7 +509,6 @@ footer span{color:var(--rose)}
         <span class="emoji-opt" data-emoji="🔍">🔍</span>
       </div>
     </div>
-
     <div class="form-group">
       <label>Card Color</label>
       <div class="color-row" id="color-row">
@@ -518,22 +517,9 @@ footer span{color:var(--rose)}
         <div class="color-opt c-lavender" data-color="color-lavender" title="Lavender"></div>
       </div>
     </div>
-
-    <div class="form-group">
-      <label>Project Name *</label>
-      <input type="text" id="m-title" placeholder="e.g. To-Do List App"/>
-    </div>
-
-    <div class="form-group">
-      <label>Description *</label>
-      <textarea id="m-desc" rows="3" placeholder="What does this project do?"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>What I Learned</label>
-      <textarea id="m-learned" rows="3" placeholder="What skills or concepts did this teach you?"></textarea>
-    </div>
-
+    <div class="form-group"><label>Project Name *</label><input type="text" id="m-title" placeholder="e.g. To-Do List App"/></div>
+    <div class="form-group"><label>Description *</label><textarea id="m-desc" rows="3" placeholder="What does this project do?"></textarea></div>
+    <div class="form-group"><label>What I Learned</label><textarea id="m-learned" rows="3" placeholder="What skills or concepts did this teach you?"></textarea></div>
     <div class="form-group">
       <label>Status</label>
       <select id="m-status">
@@ -544,25 +530,15 @@ footer span{color:var(--rose)}
         <option value="Done">Done</option>
       </select>
     </div>
-
     <div class="form-group">
       <label>Technologies / Languages Used</label>
       <div class="tag-input-wrap" id="tag-wrap" onclick="document.getElementById('tag-input').focus()">
         <input type="text" id="tag-input" class="tag-text-input" placeholder="Type a tech and press Enter…"/>
       </div>
-      <div class="tag-hint">💡 Type a name (e.g. "HTML", "Python") and press <strong>Enter</strong> or <strong>comma</strong> to add it. These power your Skills chart!</div>
+      <div class="tag-hint">💡 Type a name (e.g. "HTML", "Python") and press <strong>Enter</strong> or <strong>comma</strong> to add it.</div>
     </div>
-
-    <div class="form-group">
-      <label>GitHub Repo Link <span style="font-weight:400;color:var(--text-light)">(optional)</span></label>
-      <input type="url" id="m-github" placeholder="https://github.com/yourusername/project"/>
-    </div>
-
-    <div class="form-group">
-      <label>Live Demo Link <span style="font-weight:400;color:var(--text-light)">(optional)</span></label>
-      <input type="url" id="m-live" placeholder="https://yourproject.netlify.app"/>
-    </div>
-
+    <div class="form-group"><label>GitHub Repo Link <span style="font-weight:400;color:var(--text-light)">(optional)</span></label><input type="url" id="m-github" placeholder="https://github.com/yourusername/project"/></div>
+    <div class="form-group"><label>Live Demo Link <span style="font-weight:400;color:var(--text-light)">(optional)</span></label><input type="url" id="m-live" placeholder="https://yourproject.netlify.app"/></div>
     <div class="modal-footer">
       <button class="cancel-btn" onclick="closeModal()">Cancel</button>
       <button class="save-btn" onclick="saveProject()">Save Project ✨</button>
@@ -586,11 +562,7 @@ footer span{color:var(--rose)}
 
 <div class="toast" id="toast"></div>
 
-
 <script>
-/* ═══════════════════════════════════
-   DATA STORAGE
-═══════════════════════════════════ */
 const STORE_KEY = 'portfolio_projects_v2';
 
 const TECH_COLORS = {
@@ -613,515 +585,311 @@ const TECH_EMOJI = {
   'flutter':'💙','kotlin':'🎯','swift':'🍎',
 };
 
-function getProjects() {
-  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
-  catch(e) { return []; }
+function getProjects(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||[];}catch(e){return[];}}
+function saveProjects(arr){localStorage.setItem(STORE_KEY,JSON.stringify(arr));}
+function escHtml(str){return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function statusLabel(s){return {Done:'Done',Ongoing:'Ongoing',Improving:'Improving',Paused:'Paused',Beginner:'Beginner'}[s]||s;}
+
+function showToast(msg,duration){
+  duration=duration||3000;
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},duration);
 }
 
-function saveProjects(arr) {
-  localStorage.setItem(STORE_KEY, JSON.stringify(arr));
+let pageHistory=['home'];
+
+function navigateTo(page){
+  const current=pageHistory[pageHistory.length-1];
+  const fromEl=document.getElementById('page-'+current);
+  const toEl=document.getElementById('page-'+page);
+  fromEl.classList.remove('page-active');fromEl.classList.add('page-left');
+  toEl.classList.remove('page-right');toEl.classList.add('page-active');
+  toEl.scrollTop=0;pageHistory.push(page);
+  if(page==='projects')renderFullGrid();
 }
 
-/* ═══════════════════════════════════
-   HELPERS
-═══════════════════════════════════ */
-function escHtml(str) {
-  return String(str)
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function statusLabel(s) {
-  const map = {
-    Done:'Done', Ongoing:'Ongoing',
-    Improving:'Improving', Paused:'Paused', Beginner:'Beginner'
-  };
-  return map[s] || s;
-}
-
-/* ═══════════════════════════════════
-   TOAST
-═══════════════════════════════════ */
-function showToast(msg, duration) {
-  duration = duration || 3000;
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, duration);
-}
-
-/* ═══════════════════════════════════
-   PAGE ROUTING
-═══════════════════════════════════ */
-let pageHistory = ['home'];
-
-function navigateTo(page) {
-  const current = pageHistory[pageHistory.length - 1];
-  const fromEl = document.getElementById('page-' + current);
-  const toEl   = document.getElementById('page-' + page);
-  fromEl.classList.remove('page-active');
-  fromEl.classList.add('page-left');
-  toEl.classList.remove('page-right');
-  toEl.classList.add('page-active');
-  toEl.scrollTop = 0;
-  pageHistory.push(page);
-  if (page === 'projects') renderFullGrid();
-}
-
-function navigateBack(current) {
+function navigateBack(current){
   pageHistory.pop();
-  const prev = pageHistory[pageHistory.length - 1];
-  const fromEl = document.getElementById('page-' + current);
-  const toEl   = document.getElementById('page-' + prev);
-  fromEl.classList.remove('page-active');
-  fromEl.classList.add('page-right');
-  toEl.classList.remove('page-left');
-  toEl.classList.add('page-active');
-  toEl.scrollTop = 0;
-  if (prev === 'projects') renderFullGrid();
+  const prev=pageHistory[pageHistory.length-1];
+  const fromEl=document.getElementById('page-'+current);
+  const toEl=document.getElementById('page-'+prev);
+  fromEl.classList.remove('page-active');fromEl.classList.add('page-right');
+  toEl.classList.remove('page-left');toEl.classList.add('page-active');
+  toEl.scrollTop=0;
+  if(prev==='projects')renderFullGrid();
 }
 
-function goHome() {
-  ['projects','project-detail'].forEach(function(p) {
-    const el = document.getElementById('page-' + p);
-    el.classList.remove('page-active','page-left');
-    el.classList.add('page-right');
+function goHome(){
+  ['projects','project-detail'].forEach(function(p){
+    const el=document.getElementById('page-'+p);
+    el.classList.remove('page-active','page-left');el.classList.add('page-right');
   });
-  const home = document.getElementById('page-home');
-  home.classList.add('page-active');
-  home.classList.remove('page-left','page-right');
-  pageHistory = ['home'];
+  const home=document.getElementById('page-home');
+  home.classList.add('page-active');home.classList.remove('page-left','page-right');
+  pageHistory=['home'];
 }
 
-function smoothTo(selector) {
+function smoothTo(selector){
   setTimeout(function(){
-    const el = document.querySelector(selector);
-    if (el) el.scrollIntoView({ behavior:'smooth' });
-  }, 120);
+    const el=document.querySelector(selector);
+    if(el)el.scrollIntoView({behavior:'smooth'});
+  },120);
 }
 
-/* ═══════════════════════════════════
-   PREVIEW GRID (Home — shows up to 3)
-═══════════════════════════════════ */
-function renderPreviewGrid() {
-  const projects = getProjects();
-  const grid = document.getElementById('preview-grid');
-  const preview = projects.slice(0, 3);
-
-  if (preview.length === 0) {
-    grid.innerHTML = '<p style="text-align:center;color:var(--text-light);grid-column:1/-1;padding:40px 0">No projects yet! Head over to the Projects page to add your first one. 🌸</p>';
+function renderPreviewGrid(){
+  const projects=getProjects();
+  const grid=document.getElementById('preview-grid');
+  const preview=projects.slice(0,3);
+  if(preview.length===0){
+    grid.innerHTML='<p style="text-align:center;color:var(--text-light);grid-column:1/-1;padding:40px 0">No projects yet! Head over to the Projects page to add your first one. 🌸</p>';
     return;
   }
-
-  grid.innerHTML = preview.map(function(p) {
-    return '<div class="preview-card ' + p.color + '" onclick="openDetail(\'' + p.id + '\')">' +
-      '<div class="card-emoji">' + p.emoji + '</div>' +
-      '<div class="card-title">' + escHtml(p.title) + '</div>' +
-      '<div class="card-desc">'  + escHtml(p.desc)  + '</div>' +
-      '<span class="card-status status-' + p.status + '">' + statusLabel(p.status) + '</span>' +
-      '<div class="card-tags">' + (p.tags||[]).map(function(t){ return '<span class="card-tag">' + escHtml(t) + '</span>'; }).join('') + '</div>' +
+  grid.innerHTML=preview.map(function(p){
+    return '<div class="preview-card '+p.color+'" onclick="openDetail(\''+p.id+'\')">'+
+      '<div class="card-emoji">'+p.emoji+'</div>'+
+      '<div class="card-title">'+escHtml(p.title)+'</div>'+
+      '<div class="card-desc">'+escHtml(p.desc)+'</div>'+
+      '<span class="card-status status-'+p.status+'">'+statusLabel(p.status)+'</span>'+
+      '<div class="card-tags">'+(p.tags||[]).map(function(t){return'<span class="card-tag">'+escHtml(t)+'</span>';}).join('')+'</div>'+
     '</div>';
   }).join('');
 }
 
-/* ═══════════════════════════════════
-   FULL GRID (Projects page)
-═══════════════════════════════════ */
-let activeFilter = 'all';
+let activeFilter='all';
 
-function renderFullGrid() {
-  const projects = getProjects();
-  const grid = document.getElementById('projects-full-grid');
-  const filtered = activeFilter === 'all'
-    ? projects
-    : projects.filter(function(p){ return p.status === activeFilter; });
-
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🌸</div><p>No projects here yet!<br>Click <strong>Add Project</strong> to get started.</p></div>';
+function renderFullGrid(){
+  const projects=getProjects();
+  const grid=document.getElementById('projects-full-grid');
+  const filtered=activeFilter==='all'?projects:projects.filter(function(p){return p.status===activeFilter;});
+  if(filtered.length===0){
+    grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🌸</div><p>No projects here yet!<br>Click <strong>Add Project</strong> to get started.</p></div>';
     return;
   }
-
-  grid.innerHTML = filtered.map(function(p) {
-    return '<div class="full-card ' + p.color + '">' +
-      '<div class="full-card-body">' +
-        '<div class="full-card-emoji">' + p.emoji + '</div>' +
-        '<div class="full-card-title">' + escHtml(p.title) + '</div>' +
-        '<div class="full-card-desc">'  + escHtml(p.desc)  + '</div>' +
-        '<div class="full-card-tags">'  + (p.tags||[]).map(function(t){ return '<span class="card-tag">' + escHtml(t) + '</span>'; }).join('') + '</div>' +
-        '<div class="full-card-footer">' +
-          '<span class="card-status status-' + p.status + '">' + statusLabel(p.status) + '</span>' +
-          '<div class="card-actions">' +
-            '<button class="view-btn"   onclick="openDetail(\''    + p.id + '\')"><i class="fas fa-eye"></i> View</button>' +
-            '<button class="edit-btn"   onclick="openEditModal(\'' + p.id + '\')"><i class="fas fa-pen"></i> Edit</button>' +
-            '<button class="delete-btn" onclick="askDelete(\''     + p.id + '\')"><i class="fas fa-trash"></i></button>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
+  grid.innerHTML=filtered.map(function(p){
+    return '<div class="full-card '+p.color+'">'+
+      '<div class="full-card-body">'+
+        '<div class="full-card-emoji">'+p.emoji+'</div>'+
+        '<div class="full-card-title">'+escHtml(p.title)+'</div>'+
+        '<div class="full-card-desc">'+escHtml(p.desc)+'</div>'+
+        '<div class="full-card-tags">'+(p.tags||[]).map(function(t){return'<span class="card-tag">'+escHtml(t)+'</span>';}).join('')+'</div>'+
+        '<div class="full-card-footer">'+
+          '<span class="card-status status-'+p.status+'">'+statusLabel(p.status)+'</span>'+
+          '<div class="card-actions">'+
+            '<button class="view-btn" onclick="openDetail(\''+p.id+'\')"><i class="fas fa-eye"></i> View</button>'+
+            '<button class="edit-btn" onclick="openEditModal(\''+p.id+'\')"><i class="fas fa-pen"></i> Edit</button>'+
+            '<button class="delete-btn" onclick="askDelete(\''+p.id+'\')"><i class="fas fa-trash"></i></button>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
     '</div>';
   }).join('');
 }
 
-/* Filter row */
-document.getElementById('filter-row').addEventListener('click', function(e) {
-  const btn = e.target.closest('.filter-btn');
-  if (!btn) return;
-  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-  activeFilter = btn.dataset.filter;
-  renderFullGrid();
+document.getElementById('filter-row').addEventListener('click',function(e){
+  const btn=e.target.closest('.filter-btn');if(!btn)return;
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');activeFilter=btn.dataset.filter;renderFullGrid();
 });
 
-/* ═══════════════════════════════════
-   DETAIL PAGE
-═══════════════════════════════════ */
-function openDetail(id) {
-  const p = getProjects().find(function(x){ return x.id === id; });
-  if (!p) return;
-
-  document.getElementById('detail-hero').className    = 'detail-hero ' + p.color;
-  document.getElementById('detail-emoji').textContent = p.emoji;
-  document.getElementById('detail-title').textContent = p.title;
-  document.getElementById('detail-status-row').innerHTML =
-    '<span class="card-status status-' + p.status + '">' + statusLabel(p.status) + '</span>';
-  document.getElementById('detail-desc').textContent    = p.desc;
-  document.getElementById('detail-learned').textContent = p.learned || 'Nothing noted yet — but every project teaches something! 🌱';
-  document.getElementById('detail-tags').innerHTML = (p.tags||[]).map(function(t){
-    return '<span class="card-tag">' + escHtml(t) + '</span>';
-  }).join('');
-
-  let linkHtml = '<div class="detail-section-label"><i class="fas fa-link"></i> Links</div>';
-  if (p.github) linkHtml += '<a href="' + escHtml(p.github) + '" target="_blank" class="github-link-btn"><i class="fab fa-github"></i> View on GitHub</a>';
-  if (p.live)   linkHtml += '<a href="' + escHtml(p.live)   + '" target="_blank" class="live-link-btn"><i class="fas fa-external-link-alt"></i> Live Demo</a>';
-  if (!p.github && !p.live) linkHtml += '<span class="no-link-note"><i class="fas fa-clock"></i> Links coming soon!</span>';
-  document.getElementById('detail-link-section').innerHTML = linkHtml;
-
+function openDetail(id){
+  const p=getProjects().find(function(x){return x.id===id;});if(!p)return;
+  document.getElementById('detail-hero').className='detail-hero '+p.color;
+  document.getElementById('detail-emoji').textContent=p.emoji;
+  document.getElementById('detail-title').textContent=p.title;
+  document.getElementById('detail-status-row').innerHTML='<span class="card-status status-'+p.status+'">'+statusLabel(p.status)+'</span>';
+  document.getElementById('detail-desc').textContent=p.desc;
+  document.getElementById('detail-learned').textContent=p.learned||'Nothing noted yet — but every project teaches something! 🌱';
+  document.getElementById('detail-tags').innerHTML=(p.tags||[]).map(function(t){return'<span class="card-tag">'+escHtml(t)+'</span>';}).join('');
+  let linkHtml='<div class="detail-section-label"><i class="fas fa-link"></i> Links</div>';
+  if(p.github)linkHtml+='<a href="'+escHtml(p.github)+'" target="_blank" class="github-link-btn"><i class="fab fa-github"></i> View on GitHub</a>';
+  if(p.live)linkHtml+='<a href="'+escHtml(p.live)+'" target="_blank" class="live-link-btn"><i class="fas fa-external-link-alt"></i> Live Demo</a>';
+  if(!p.github&&!p.live)linkHtml+='<span class="no-link-note"><i class="fas fa-clock"></i> Links coming soon!</span>';
+  document.getElementById('detail-link-section').innerHTML=linkHtml;
   navigateTo('project-detail');
 }
 
-/* ═══════════════════════════════════
-   MODAL — ADD / EDIT
-═══════════════════════════════════ */
-let editingId     = null;
-let modalTags     = [];
-let selectedEmoji = '🌐';
-let selectedColor = 'color-rose';
+let editingId=null,modalTags=[],selectedEmoji='🌐',selectedColor='color-rose';
 
-function openAddModal() {
-  editingId     = null;
-  modalTags     = [];
-  selectedEmoji = '🌐';
-  selectedColor = 'color-rose';
-  document.getElementById('modal-title-label').textContent = '➕ Add New Project';
-  document.getElementById('m-title').value   = '';
-  document.getElementById('m-desc').value    = '';
-  document.getElementById('m-learned').value = '';
-  document.getElementById('m-status').value  = 'Beginner';
-  document.getElementById('m-github').value  = '';
-  document.getElementById('m-live').value    = '';
-  resetEmojiPicker('🌐');
-  resetColorPicker('color-rose');
-  renderTagPills();
+function openAddModal(){
+  editingId=null;modalTags=[];selectedEmoji='🌐';selectedColor='color-rose';
+  document.getElementById('modal-title-label').textContent='➕ Add New Project';
+  document.getElementById('m-title').value='';document.getElementById('m-desc').value='';
+  document.getElementById('m-learned').value='';document.getElementById('m-status').value='Beginner';
+  document.getElementById('m-github').value='';document.getElementById('m-live').value='';
+  resetEmojiPicker('🌐');resetColorPicker('color-rose');renderTagPills();
   document.getElementById('proj-modal').classList.add('open');
 }
 
-function openEditModal(id) {
-  const p = getProjects().find(function(x){ return x.id === id; });
-  if (!p) return;
-  editingId     = id;
-  modalTags     = (p.tags || []).slice();
-  selectedEmoji = p.emoji;
-  selectedColor = p.color;
-  document.getElementById('modal-title-label').textContent = '✏️ Edit Project';
-  document.getElementById('m-title').value   = p.title;
-  document.getElementById('m-desc').value    = p.desc;
-  document.getElementById('m-learned').value = p.learned || '';
-  document.getElementById('m-status').value  = p.status;
-  document.getElementById('m-github').value  = p.github || '';
-  document.getElementById('m-live').value    = p.live   || '';
-  resetEmojiPicker(p.emoji);
-  resetColorPicker(p.color);
-  renderTagPills();
+function openEditModal(id){
+  const p=getProjects().find(function(x){return x.id===id;});if(!p)return;
+  editingId=id;modalTags=(p.tags||[]).slice();selectedEmoji=p.emoji;selectedColor=p.color;
+  document.getElementById('modal-title-label').textContent='✏️ Edit Project';
+  document.getElementById('m-title').value=p.title;document.getElementById('m-desc').value=p.desc;
+  document.getElementById('m-learned').value=p.learned||'';document.getElementById('m-status').value=p.status;
+  document.getElementById('m-github').value=p.github||'';document.getElementById('m-live').value=p.live||'';
+  resetEmojiPicker(p.emoji);resetColorPicker(p.color);renderTagPills();
   document.getElementById('proj-modal').classList.add('open');
 }
 
-function closeModal() {
-  document.getElementById('proj-modal').classList.remove('open');
-}
+function closeModal(){document.getElementById('proj-modal').classList.remove('open');}
 
-function saveProject() {
-  const title = document.getElementById('m-title').value.trim();
-  const desc  = document.getElementById('m-desc').value.trim();
-  if (!title || !desc) {
-    showToast('⚠️ Project name and description are required!');
-    return;
-  }
-
-  /* Flush any half-typed tag */
-  const rawTag = document.getElementById('tag-input').value.trim();
-  if (rawTag) { modalTags.push(rawTag); document.getElementById('tag-input').value = ''; }
-
-  const projects = getProjects();
-  const proj = {
-    id:      editingId || Date.now().toString(),
-    emoji:   selectedEmoji,
-    color:   selectedColor,
-    title:   title,
-    desc:    desc,
-    learned: document.getElementById('m-learned').value.trim(),
-    status:  document.getElementById('m-status').value,
-    tags:    modalTags.slice(),
-    github:  document.getElementById('m-github').value.trim(),
-    live:    document.getElementById('m-live').value.trim(),
+function saveProject(){
+  const title=document.getElementById('m-title').value.trim();
+  const desc=document.getElementById('m-desc').value.trim();
+  if(!title||!desc){showToast('⚠️ Project name and description are required!');return;}
+  const rawTag=document.getElementById('tag-input').value.trim();
+  if(rawTag){modalTags.push(rawTag);document.getElementById('tag-input').value='';}
+  const projects=getProjects();
+  const proj={
+    id:editingId||Date.now().toString(),emoji:selectedEmoji,color:selectedColor,
+    title:title,desc:desc,learned:document.getElementById('m-learned').value.trim(),
+    status:document.getElementById('m-status').value,tags:modalTags.slice(),
+    github:document.getElementById('m-github').value.trim(),live:document.getElementById('m-live').value.trim(),
   };
-
-  if (editingId) {
-    const idx = projects.findIndex(function(p){ return p.id === editingId; });
-    if (idx !== -1) projects[idx] = proj; else projects.unshift(proj);
-  } else {
-    projects.unshift(proj);
-  }
-
-  saveProjects(projects);
-  closeModal();
-  renderFullGrid();
-  renderPreviewGrid();
-  renderSkills();
-  showToast(editingId ? '✅ Project updated!' : '🌸 Project added!');
+  if(editingId){const idx=projects.findIndex(function(p){return p.id===editingId;});if(idx!==-1)projects[idx]=proj;else projects.unshift(proj);}
+  else{projects.unshift(proj);}
+  saveProjects(projects);closeModal();renderFullGrid();renderPreviewGrid();renderSkills();
+  showToast(editingId?'✅ Project updated!':'🌸 Project added!');
 }
 
-/* Emoji picker */
-document.getElementById('emoji-row').addEventListener('click', function(e) {
-  const opt = e.target.closest('.emoji-opt');
-  if (!opt) return;
-  document.querySelectorAll('.emoji-opt').forEach(function(o){ o.classList.remove('selected'); });
-  opt.classList.add('selected');
-  selectedEmoji = opt.dataset.emoji;
+document.getElementById('emoji-row').addEventListener('click',function(e){
+  const opt=e.target.closest('.emoji-opt');if(!opt)return;
+  document.querySelectorAll('.emoji-opt').forEach(function(o){o.classList.remove('selected');});
+  opt.classList.add('selected');selectedEmoji=opt.dataset.emoji;
 });
 
-function resetEmojiPicker(emoji) {
-  document.querySelectorAll('.emoji-opt').forEach(function(o){
-    o.classList.toggle('selected', o.dataset.emoji === emoji);
-  });
-  selectedEmoji = emoji;
+function resetEmojiPicker(emoji){
+  document.querySelectorAll('.emoji-opt').forEach(function(o){o.classList.toggle('selected',o.dataset.emoji===emoji);});
+  selectedEmoji=emoji;
 }
 
-/* Color picker */
-document.getElementById('color-row').addEventListener('click', function(e) {
-  const opt = e.target.closest('.color-opt');
-  if (!opt) return;
-  document.querySelectorAll('.color-opt').forEach(function(o){ o.classList.remove('selected'); });
-  opt.classList.add('selected');
-  selectedColor = opt.dataset.color;
+document.getElementById('color-row').addEventListener('click',function(e){
+  const opt=e.target.closest('.color-opt');if(!opt)return;
+  document.querySelectorAll('.color-opt').forEach(function(o){o.classList.remove('selected');});
+  opt.classList.add('selected');selectedColor=opt.dataset.color;
 });
 
-function resetColorPicker(color) {
-  document.querySelectorAll('.color-opt').forEach(function(o){
-    o.classList.toggle('selected', o.dataset.color === color);
-  });
-  selectedColor = color;
+function resetColorPicker(color){
+  document.querySelectorAll('.color-opt').forEach(function(o){o.classList.toggle('selected',o.dataset.color===color);});
+  selectedColor=color;
 }
 
-/* Tag input */
-function renderTagPills() {
-  const wrap  = document.getElementById('tag-wrap');
-  const input = document.getElementById('tag-input');
-  wrap.innerHTML = '';
-  modalTags.forEach(function(tag, i) {
-    const pill = document.createElement('span');
-    pill.className = 'tag-pill';
-    pill.innerHTML = escHtml(tag) + ' <button type="button" onclick="removeTag(' + i + ')">×</button>';
+function renderTagPills(){
+  const wrap=document.getElementById('tag-wrap');
+  const input=document.getElementById('tag-input');
+  wrap.innerHTML='';
+  modalTags.forEach(function(tag,i){
+    const pill=document.createElement('span');pill.className='tag-pill';
+    pill.innerHTML=escHtml(tag)+' <button type="button" onclick="removeTag('+i+')">×</button>';
     wrap.appendChild(pill);
   });
-  wrap.appendChild(input);
-  input.value = '';
+  wrap.appendChild(input);input.value='';
 }
 
-function removeTag(i) {
-  modalTags.splice(i, 1);
-  renderTagPills();
+function removeTag(i){modalTags.splice(i,1);renderTagPills();}
+
+function addTag(val){
+  const tag=val.trim().replace(/,/g,'');
+  if(tag&&!modalTags.includes(tag)){modalTags.push(tag);renderTagPills();}
 }
 
-function addTag(val) {
-  const tag = val.trim().replace(/,/g,'');
-  if (tag && !modalTags.includes(tag)) {
-    modalTags.push(tag);
-    renderTagPills();
-  }
-}
-
-document.getElementById('tag-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' || e.key === ',') {
-    e.preventDefault();
-    addTag(e.target.value);
-  }
-  if (e.key === 'Backspace' && e.target.value === '' && modalTags.length > 0) {
-    modalTags.pop();
-    renderTagPills();
-  }
+document.getElementById('tag-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===','){e.preventDefault();addTag(e.target.value);}
+  if(e.key==='Backspace'&&e.target.value===''&&modalTags.length>0){modalTags.pop();renderTagPills();}
 });
 
-document.getElementById('tag-input').addEventListener('blur', function(e) {
-  if (e.target.value.trim()) addTag(e.target.value);
-});
+document.getElementById('tag-input').addEventListener('blur',function(e){if(e.target.value.trim())addTag(e.target.value);});
+document.getElementById('proj-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
-/* Close modal on overlay click */
-document.getElementById('proj-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+let deletingId=null;
 
-/* ═══════════════════════════════════
-   DELETE
-═══════════════════════════════════ */
-let deletingId = null;
-
-function askDelete(id) {
-  deletingId = id;
-  document.getElementById('confirm-overlay').classList.add('open');
-}
-
-function closeConfirm() {
-  deletingId = null;
-  document.getElementById('confirm-overlay').classList.remove('open');
-}
-
-function confirmDelete() {
-  if (!deletingId) return;
-  const projects = getProjects().filter(function(p){ return p.id !== deletingId; });
-  saveProjects(projects);
-  closeConfirm();
-  renderFullGrid();
-  renderPreviewGrid();
-  renderSkills();
+function askDelete(id){deletingId=id;document.getElementById('confirm-overlay').classList.add('open');}
+function closeConfirm(){deletingId=null;document.getElementById('confirm-overlay').classList.remove('open');}
+function confirmDelete(){
+  if(!deletingId)return;
+  const projects=getProjects().filter(function(p){return p.id!==deletingId;});
+  saveProjects(projects);closeConfirm();renderFullGrid();renderPreviewGrid();renderSkills();
   showToast('Project deleted.');
 }
 
-/* ═══════════════════════════════════
-   SKILLS (auto-calculated from tags)
-═══════════════════════════════════ */
-function renderSkills() {
-  const projects = getProjects();
-  const techCount = {};
-
-  projects.forEach(function(p) {
-    (p.tags || []).forEach(function(t) {
-      const key = t.toLowerCase().trim();
-      if (key) techCount[key] = (techCount[key] || 0) + 1;
-    });
+function renderSkills(){
+  const projects=getProjects();const techCount={};
+  projects.forEach(function(p){
+    (p.tags||[]).forEach(function(t){const key=t.toLowerCase().trim();if(key)techCount[key]=(techCount[key]||0)+1;});
   });
-
-  const total   = projects.length || 1;
-  const entries = Object.entries(techCount).sort(function(a,b){ return b[1]-a[1]; });
-  const grid    = document.getElementById('skills-grid');
-
-  if (entries.length === 0) {
-    grid.innerHTML = '<p style="text-align:center;color:var(--text-light);grid-column:1/-1;padding:30px 0">Add projects with tech tags to see your skills grow here! 🌱</p>';
+  const total=projects.length||1;
+  const entries=Object.entries(techCount).sort(function(a,b){return b[1]-a[1];});
+  const grid=document.getElementById('skills-grid');
+  if(entries.length===0){
+    grid.innerHTML='<p style="text-align:center;color:var(--text-light);grid-column:1/-1;padding:30px 0">Add projects with tech tags to see your skills grow here! 🌱</p>';
     return;
   }
-
-  grid.innerHTML = entries.map(function(entry) {
-    const tech  = entry[0];
-    const count = entry[1];
-    const pct   = Math.min(Math.round((count / total) * 100), 100);
-    const color = TECH_COLORS[tech] || '#f2a7a7';
-    const emoji = TECH_EMOJI[tech]  || '💻';
-    const display = tech.charAt(0).toUpperCase() + tech.slice(1);
-    return '<div class="skill-item">' +
-      '<div class="skill-header">' +
-        '<div class="skill-name">' + emoji + ' ' + escHtml(display) + '</div>' +
-        '<div class="skill-meta">' + count + ' project' + (count > 1 ? 's' : '') + '</div>' +
-      '</div>' +
-      '<div class="skill-bar-bg"><div class="skill-bar" data-width="' + pct + '%" style="background:' + color + '"></div></div>' +
-      '<div class="skill-count">' + pct + '% usage across projects</div>' +
+  grid.innerHTML=entries.map(function(entry){
+    const tech=entry[0],count=entry[1];
+    const pct=Math.min(Math.round((count/total)*100),100);
+    const color=TECH_COLORS[tech]||'#f2a7a7';
+    const emoji=TECH_EMOJI[tech]||'💻';
+    const display=tech.charAt(0).toUpperCase()+tech.slice(1);
+    return '<div class="skill-item">'+
+      '<div class="skill-header">'+
+        '<div class="skill-name">'+emoji+' '+escHtml(display)+'</div>'+
+        '<div class="skill-meta">'+count+' project'+(count>1?'s':'')+'</div>'+
+      '</div>'+
+      '<div class="skill-bar-bg"><div class="skill-bar" data-width="'+pct+'%" style="background:'+color+'"></div></div>'+
+      '<div class="skill-count">'+pct+'% usage across projects</div>'+
     '</div>';
   }).join('');
-
-  /* Animate bars after render */
   requestAnimationFrame(function(){
     document.querySelectorAll('.skill-bar').forEach(function(bar){
-      bar.style.width = '0';
-      requestAnimationFrame(function(){
-        bar.style.width = bar.dataset.width;
-      });
+      bar.style.width='0';
+      requestAnimationFrame(function(){bar.style.width=bar.dataset.width;});
     });
   });
 }
 
-/* ═══════════════════════════════════
-   FADE-IN ON SCROLL
-═══════════════════════════════════ */
-const fadeObs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e){
-    if (e.isIntersecting) e.target.classList.add('visible');
-  });
-}, { threshold: 0.12 });
+const fadeObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.12});
+document.querySelectorAll('.fade-in').forEach(function(el){fadeObs.observe(el);});
 
-document.querySelectorAll('.fade-in').forEach(function(el){ fadeObs.observe(el); });
+const phrases=['Beginner Web Developer 🌱','UI Enthusiast ✨','Lifelong Learner 📚','Bug Fixer in Training 🐛','Building cute things one commit at a time 💻'];
+let phraseIdx=0,charIdx=0,deleting=false;
+const typingEl=document.getElementById('typing-text');
 
-/* ═══════════════════════════════════
-   TYPING ANIMATION
-═══════════════════════════════════ */
-const phrases = [
-  'Beginner Web Developer 🌱',
-  'UI Enthusiast ✨',
-  'Lifelong Learner 📚',
-  'Bug Fixer in Training 🐛',
-  'Building cute things one commit at a time 💻',
-];
-let phraseIdx = 0, charIdx = 0, deleting = false;
-const typingEl = document.getElementById('typing-text');
-
-function type() {
-  const phrase = phrases[phraseIdx];
-  if (!deleting) {
-    typingEl.innerHTML = escHtml(phrase.slice(0, charIdx + 1)) + '<span class="cursor-blink">|</span>';
+function type(){
+  const phrase=phrases[phraseIdx];
+  if(!deleting){
+    typingEl.innerHTML=escHtml(phrase.slice(0,charIdx+1))+'<span class="cursor-blink">|</span>';
     charIdx++;
-    if (charIdx === phrase.length) {
-      deleting = true;
-      setTimeout(type, 1800);
-      return;
-    }
-  } else {
-    typingEl.innerHTML = escHtml(phrase.slice(0, charIdx)) + '<span class="cursor-blink">|</span>';
+    if(charIdx===phrase.length){deleting=true;setTimeout(type,1800);return;}
+  }else{
+    typingEl.innerHTML=escHtml(phrase.slice(0,charIdx))+'<span class="cursor-blink">|</span>';
     charIdx--;
-    if (charIdx < 0) {
-      deleting   = false;
-      phraseIdx  = (phraseIdx + 1) % phrases.length;
-      charIdx    = 0;
-    }
+    if(charIdx<0){deleting=false;phraseIdx=(phraseIdx+1)%phrases.length;charIdx=0;}
   }
-  setTimeout(type, deleting ? 48 : 82);
+  setTimeout(type,deleting?48:82);
 }
 type();
 
-/* ═══════════════════════════════════
-   MASCOT EYE TRACKING
-═══════════════════════════════════ */
-document.addEventListener('mousemove', function(e) {
-  const svg = document.getElementById('mascot-svg');
-  if (!svg) return;
-  const rect = svg.getBoundingClientRect();
-  const cx = rect.left + rect.width / 2;
-  const cy = rect.top  + rect.height / 2;
-  const dx = e.clientX - cx;
-  const dy = e.clientY - cy;
-  const angle = Math.atan2(dy, dx);
-  const dist  = Math.min(Math.hypot(dx, dy) / 12, 4);
-  const ox = Math.cos(angle) * dist;
-  const oy = Math.sin(angle) * dist;
-
+document.addEventListener('mousemove',function(e){
+  const svg=document.getElementById('mascot-svg');if(!svg)return;
+  const rect=svg.getBoundingClientRect();
+  const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+  const dx=e.clientX-cx,dy=e.clientY-cy;
+  const angle=Math.atan2(dy,dx);
+  const dist=Math.min(Math.hypot(dx,dy)/12,4);
+  const ox=Math.cos(angle)*dist,oy=Math.sin(angle)*dist;
   [['left-iris',125,176],['left-pupil',125,176]].forEach(function(x){
-    const el = document.getElementById(x[0]);
-    if (el) { el.setAttribute('cx', x[1]+ox); el.setAttribute('cy', x[2]+oy); }
+    const el=document.getElementById(x[0]);
+    if(el){el.setAttribute('cx',x[1]+ox);el.setAttribute('cy',x[2]+oy);}
   });
   [['right-iris',195,176],['right-pupil',195,176]].forEach(function(x){
-    const el = document.getElementById(x[0]);
-    if (el) { el.setAttribute('cx', x[1]+ox); el.setAttribute('cy', x[2]+oy); }
+    const el=document.getElementById(x[0]);
+    if(el){el.setAttribute('cx',x[1]+ox);el.setAttribute('cy',x[2]+oy);}
   });
 });
 
-/* ═══════════════════════════════════
-   INIT
-═══════════════════════════════════ */
 renderPreviewGrid();
 renderSkills();
 </script>

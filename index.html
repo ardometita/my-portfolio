@@ -701,48 +701,6 @@ function smoothTo(selector) {
 }
 
 /* ═══════════════════════════════════
-   CONTACT FORM
-═══════════════════════════════════ */
-function sendMessage() {
-  const name  = document.getElementById('f-name').value.trim();
-  const email = document.getElementById('f-email').value.trim();
-  const msg   = document.getElementById('f-msg').value.trim();
-
-  if (!name || !email || !msg) {
-    showToast('⚠️ Please fill in all fields!');
-    return;
-  }
-
-  const btn = document.querySelector('.submit-btn');
-  btn.textContent = 'Sending... 🕊️';
-  btn.disabled = true;
-
-  fetch('http://localhost:3000/send-message', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email, message: msg })
-  })
-  .then(function(res) { return res.json(); })
-  .then(function(data) {
-    if (data.success) {
-      document.getElementById('f-name').value  = '';
-      document.getElementById('f-email').value = '';
-      document.getElementById('f-msg').value   = '';
-      showToast('💌 Message sent! Thank you, ' + name + '~');
-    } else {
-      showToast('❌ Failed to send. Try again~');
-    }
-    btn.textContent = 'Send Message 🌼';
-    btn.disabled = false;
-  })
-  .catch(function() {
-    showToast('❌ Could not reach server. Is it running?');
-    btn.textContent = 'Send Message 🌼';
-    btn.disabled = false;
-  });
-}
-
-/* ═══════════════════════════════════
    PREVIEW GRID (Home — shows up to 3)
 ═══════════════════════════════════ */
 function renderPreviewGrid() {

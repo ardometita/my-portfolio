@@ -4,9 +4,16 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
+/* ✅ ADD THIS ROUTE HERE */
+app.get("/", (req, res) => {
+  res.json({ status: "backend alive" });
+});
+
+/* your existing POST route */
 app.post("/send", async (req, res) => {
   const { name, email, message } = req.body;
 
@@ -18,15 +25,14 @@ app.post("/send", async (req, res) => {
     }
   });
 
-  let mailOptions = {
-    from: email,
-    to: process.env.EMAIL_USER,
-    subject: `Portfolio Message from ${name}`,
-    text: message
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
+    await transporter.sendMail({
+      from: email,
+      to: process.env.EMAIL_USER,
+      subject: `Portfolio Message from ${name}`,
+      text: message
+    });
+
     res.json({ success: true });
   } catch (error) {
     res.json({ success: false, error });

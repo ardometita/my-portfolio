@@ -1,19 +1,16 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-/* ✅ ADD THIS ROUTE HERE */
 app.get("/", (req, res) => {
   res.json({ status: "backend alive" });
 });
 
-/* your existing POST route */
 app.post("/send", async (req, res) => {
   const { name, email, message } = req.body;
 
@@ -35,7 +32,8 @@ app.post("/send", async (req, res) => {
 
     res.json({ success: true });
   } catch (error) {
-    res.json({ success: false, error });
+    console.error("MAIL ERROR:", error.message);
+    res.json({ success: false, error: error.message });
   }
 });
 
